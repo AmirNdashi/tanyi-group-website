@@ -1,8 +1,55 @@
+import { useState } from "react"
 import PageHeader from "../components/PageHeader"
 import Container from "../components/Container"
 import { Mail, Phone, MapPin, Clock } from "lucide-react"
+import emailjs from "@emailjs/browser"
 
 export default function Contact() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  })
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState("")
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!form.name || !form.email || !form.message) {
+      setStatus("Please fill in all fields.")
+      return
+    }
+
+    setLoading(true)
+    setStatus("")
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+
+      setStatus("Message sent successfully. We will get back to you shortly.")
+      setForm({ name: "", email: "", message: "" })
+    } catch (error) {
+      console.error(error)
+      setStatus("Failed to send message. Please try again later.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <>
       <PageHeader
@@ -12,8 +59,6 @@ export default function Contact() {
 
       <section className="py-24 bg-gray-50">
         <Container>
-
-          {/* GRID */}
           <div className="grid gap-16 lg:grid-cols-2">
 
             {/* CONTACT INFO */}
@@ -28,14 +73,11 @@ export default function Contact() {
               </p>
 
               <div className="space-y-6">
-
                 <div className="flex items-start gap-4">
                   <MapPin className="text-primary mt-1" />
                   <div>
                     <h4 className="font-semibold">Office Location</h4>
-                    <p className="text-gray-600">
-                      Douala, Cameroon
-                    </p>
+                    <p className="text-gray-600">Douala, Cameroon</p>
                   </div>
                 </div>
 
@@ -44,7 +86,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold">Phone</h4>
                     <p className="text-gray-600">
-                      +237 XXX XXX XXX
+                      +237 676 663 399 / 693 311 406
                     </p>
                   </div>
                 </div>
@@ -54,7 +96,7 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold">Email</h4>
                     <p className="text-gray-600">
-                      info@tanyigroup.com
+                      tanyigroup@gmail.com
                     </p>
                   </div>
                 </div>
@@ -68,7 +110,6 @@ export default function Contact() {
                     </p>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -78,50 +119,50 @@ export default function Contact() {
                 Send Us a Message
               </h3>
 
-              <form className="grid gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Your full name"
-                  />
-                </div>
+              <form onSubmit={handleSubmit} className="grid gap-6">
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Your full name"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
 
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="your@email.com"
-                  />
-                </div>
+                <input
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="your@email.com"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
 
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Message
-                  </label>
-                  <textarea
-                    rows="5"
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                    placeholder="How can we assist you?"
-                  />
-                </div>
+                <textarea
+                  name="message"
+                  rows="5"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="How can we assist you?"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                />
 
                 <button
                   type="submit"
-                  className="bg-primary text-white py-3 rounded-lg font-medium transition hover:bg-secondary hover:scale-[1.02]"
+                  disabled={loading}
+                  className="bg-primary text-white py-3 rounded-lg font-medium transition hover:bg-secondary hover:scale-[1.02] disabled:opacity-60"
                 >
-                  Send Message
+                  {loading ? "Sending..." : "Send Message"}
                 </button>
+
+                {status && (
+                  <p className="text-sm text-center text-gray-600">
+                    {status}
+                  </p>
+                )}
               </form>
             </div>
 
           </div>
-
         </Container>
       </section>
     </>

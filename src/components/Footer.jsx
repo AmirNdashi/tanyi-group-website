@@ -85,15 +85,18 @@ export default function Footer() {
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-3">
                 <MapPin size={18} />
-                <span>Douala, Cameroon</span>
+                <span>quartier administratif kribi Bp 39</span>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={18} />
-                <span>+237 XXX XXX XXX</span>
+                <span>+237 676 663 399 / 693 311 406</span>
               </li>
               <li className="flex items-start gap-3">
                 <Mail size={18} />
-                <span>info@tanyigroup.com</span>
+                <span>tanyigroup@gmail.com</span>
+              </li>
+              <li className="flex items-start gap-3">
+                
               </li>
             </ul>
 
