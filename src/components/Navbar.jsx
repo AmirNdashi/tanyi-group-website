@@ -30,7 +30,7 @@ export default function Navbar() {
           : "bg-primary"
       } text-white`}
     >
-      <div className="max-w-7xl max-h-40 mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl h-20 mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
              <Link
   to="/"
