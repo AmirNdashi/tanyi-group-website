@@ -30,14 +30,18 @@ export default function Navbar() {
           : "bg-primary"
       } text-white`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl max-h-40 mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-3xl font-bold tracking-wide"
-        >
-          TANYI GROUP
-        </Link>
+             <Link
+  to="/"
+  className="flex items-center gap-3"
+>
+  <img
+    src="/logo.png"
+    alt="TANYI Group Logo"
+    className="h-80 w-auto object-contain"
+  />
+</Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-10">
