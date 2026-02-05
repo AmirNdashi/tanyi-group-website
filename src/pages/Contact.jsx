@@ -78,6 +78,8 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold">Office Location</h4>
                     <p className="text-gray-600">Douala, Cameroon</p>
+                    <p className="text-gray-600">Kribi, Cameroon</p>
+
                   </div>
                 </div>
 
