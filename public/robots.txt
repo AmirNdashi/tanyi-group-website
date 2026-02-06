@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tanyi-group.netlify.app/sitemap.xml
